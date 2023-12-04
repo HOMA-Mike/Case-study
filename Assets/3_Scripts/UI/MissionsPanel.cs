@@ -9,7 +9,6 @@ using static UnityEngine.RectTransform;
 /// <summary>Side panel holding mission tickets while in game</summary>
 public class MissionsPanel : MonoBehaviour
 {
-    // TODO : Hide panel when missions are off
     static MissionsPanel instance;
 
     [Header("References")]
@@ -28,6 +27,12 @@ public class MissionsPanel : MonoBehaviour
 
     void Awake()
     {
+        if (!RemoteConfig.BOOl_MISSIONS_ENABLED)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         // signals to mission manager that UI is ready
         MissionsManager.SetUI(this);
         instance = this;
@@ -84,7 +89,6 @@ public class MissionsPanel : MonoBehaviour
         UpdateMissionsOrder();
     }
 
-    // TODO : Fix this not working well
     void UpdateMissionsOrder()
     {
         foreach (Transform child in ticketsHolder)

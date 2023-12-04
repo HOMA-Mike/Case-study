@@ -83,6 +83,9 @@ public class MissionsManager : MonoBehaviour
 
     IEnumerator WaitForSafeInit()
     {
+        if (!RemoteConfig.BOOl_MISSIONS_ENABLED)
+            yield break;
+
         yield return new WaitUntil(() => missionsPanel != null);
 
         for (int i = 0; i < currentMissions.Length; i++)
@@ -105,6 +108,9 @@ public class MissionsManager : MonoBehaviour
 
     Mission PickMission(Difficulty difficulty)
     {
+        if (!RemoteConfig.BOOl_MISSIONS_ENABLED)
+            return null;
+
         List<MissionData> allMissions = new List<MissionData>(missions);
 
         foreach (Mission data in currentMissions)
