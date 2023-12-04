@@ -21,7 +21,7 @@ public class CurrencyManager : MonoBehaviour
     [Header("References")]
     public List<CurrencyUI> UIs;
 
-    List<CurrencyStack> currencies;
+    static List<CurrencyStack> currencies;
 
     void Awake()
     {
@@ -34,13 +34,13 @@ public class CurrencyManager : MonoBehaviour
 
     public static int GetCurrency(Currency currency)
     {
-        return instance.currencies.Find(item => item.currency == currency).amount;
+        return currencies.Find(item => item.currency == currency).amount;
     }
 
     public static void AddCurrency(Currency currency, int amount)
     {
         // I consider this safe since we initialized every possible value of Currency during Awake
-        CurrencyStack selected = instance.currencies.Find(item => item.currency == currency);
+        CurrencyStack selected = currencies.Find(item => item.currency == currency);
 
         selected.amount += amount;
         AnimateUI(selected);
@@ -48,7 +48,7 @@ public class CurrencyManager : MonoBehaviour
 
     public static void TakeCurrency(Currency current, int amount)
     {
-        CurrencyStack selected = instance.currencies.Find(item => item.currency == current);
+        CurrencyStack selected = currencies.Find(item => item.currency == current);
 
         // This will prevent spending negative currency amounts
         selected.amount = Mathf.Clamp(selected.amount - amount, 0, selected.amount);
