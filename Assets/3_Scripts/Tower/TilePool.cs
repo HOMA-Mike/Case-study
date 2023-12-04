@@ -85,5 +85,12 @@ public class TilePool : MonoBehaviour
     {
         tile.gameObject.SetActive(false);
         tile.transform.SetParent(instance.transform);
+        tile.OnTileDestroyed = null;
+    }
+
+    public static void RetrieveAllTiles()
+    {
+        foreach (Transform child in instance.transform)
+            child.GetComponent<TowerTile>().ReturnToPool();
     }
 }
