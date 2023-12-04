@@ -77,7 +77,7 @@ public class MissionsManager : MonoBehaviour
                 passed++;
             }
 
-            // OnSecondsPassed.Invoke(-passed);
+            OnSecondsPassed.Invoke(-passed);
         }
     }
 
@@ -229,7 +229,7 @@ public class MissionsManager : MonoBehaviour
                     instance.currentMissions[i] = null;
                 }
             }
-            else if (mission.progress >= mission.amount)
+            else if (mission.progress >= 1)
             {
                 UnsubscribeTracking(mission.objective, mission.TrackProgress);
                 CurrencyManager.AddCurrency(mission.currency, mission.reward);
@@ -305,13 +305,13 @@ public class MissionsManager : MonoBehaviour
             if (target != 0)
                 counter = target;
 
-            Invoke(counter);
+            Invoke(target != 0 ? 0 : counter);
         }
 
         public void CancelTracking(Action<int> callback)
         {
             trackingEvent -= callback;
-            counter = 0;
+            // counter = 0;
         }
     }
 }

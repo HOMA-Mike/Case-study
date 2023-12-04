@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 using static CurrencyManager;
@@ -5,14 +6,15 @@ using static MissionData;
 
 // lightweight class for data manipulation + safe with readonly
 /// <summary>Represents a mission with a difficulty level</summary>
+[Serializable] // for debug purposes
 public class Mission
 {
-    public readonly Objective objective;
-    public readonly Difficulty difficulty;
-    public readonly int amount;
-    public readonly Currency currency;
-    public readonly int reward;
-    public readonly string title;
+    public /*readonly*/ Objective objective;
+    public /*readonly*/ Difficulty difficulty;
+    public /*readonly*/ int amount;
+    public /*readonly*/ Currency currency;
+    public /*readonly*/ int reward;
+    public /*readonly*/ string title;
 
     public float progress { get; private set; }
 
@@ -37,5 +39,5 @@ public class Mission
     }
 
     // easy to subscribe/unsubscribe
-    public void TrackProgress(int value) => progress = value;
+    public void TrackProgress(int value) => progress = (float)value / amount;
 }

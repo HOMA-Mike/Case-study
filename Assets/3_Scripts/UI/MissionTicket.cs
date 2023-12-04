@@ -15,7 +15,7 @@ public class MissionTicket : MonoBehaviour
     public Toggle progressToggle;
     public TMP_Text progressText;
 
-    public Mission mission { get; private set; }
+    public Mission mission; //{ get; private set; }
 
     public void Init(Mission mission)
     {
@@ -31,7 +31,7 @@ public class MissionTicket : MonoBehaviour
         title.text = mission.title;
         progressSlider.value = mission.progress;
         progressToggle.isOn = mission.progress >= 1;
-        progressText.text = mission.progress + "/" + mission.amount;
+        progressText.text = (mission.progress * mission.amount) + "/" + mission.amount;
 
         progressToggle.gameObject.SetActive(mission.amount == 1);
         progressSlider.gameObject.SetActive(mission.amount > 1);
@@ -56,7 +56,7 @@ public class MissionTicket : MonoBehaviour
             if (mission.progress <= 0)
                 DestroyTicket();
         }
-        else if (mission.progress >= mission.amount)
+        else if (mission.progress >= 1)
             DestroyTicket();
 
         void DestroyTicket()
