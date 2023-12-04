@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-enum GameState
+public enum GameState
 {
     Intro = 0,
     Playing = 1,
@@ -49,7 +49,8 @@ public class GameManager : Singleton<GameManager>
     int tileCount;
     int destroyedTileCount;
     int ballCount;
-    GameState gameState = GameState.Intro;
+
+    public GameState gameState {get; private set;} = GameState.Intro;
 
     private void Awake()
     {
@@ -114,6 +115,9 @@ public class GameManager : Singleton<GameManager>
                 SaveData.CurrentLevel++;
                 SaveData.PreviousHighscore = 0;
                 SetGameState(GameState.Win);
+                // mod
+                MissionsManager.OnGameWon();
+                //
                 if (SaveData.VibrationEnabled == 1)
                     Handheld.Vibrate();
             }

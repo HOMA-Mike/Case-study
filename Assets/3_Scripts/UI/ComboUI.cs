@@ -64,6 +64,10 @@ public class ComboUI : MonoBehaviour
                 StopCoroutine(resetComboRoutine);
             resetComboRoutine = StartCoroutine(FinishCombo());
         }
+        
+        // mod
+        MissionsManager.OnComboReached.Invoke(currentCombo);
+        //
     }
 
     void ShowEncouragement()

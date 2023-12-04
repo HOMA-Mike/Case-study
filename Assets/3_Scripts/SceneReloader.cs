@@ -9,6 +9,10 @@ public class SceneReloader : MonoBehaviour
 
     IEnumerator Start()
     {
+        // mod
+        MissionsPanel.UnsubscribeTickets();
+        TilePool.RetrieveAllTiles();
+        //
         AsyncOperation loadOp = SceneManager.LoadSceneAsync("GameScene");
         loadOp.allowSceneActivation = false;
         while(!AllowChange || loadOp.progress < 0.9f)

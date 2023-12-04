@@ -71,6 +71,11 @@ public class BallProjectile : MonoBehaviour
             Explode();
             tile?.Explode(true);
         }
+
+        // mod
+        if (tile is ExplodingTile)
+            MissionsManager.OnTriggeredExplosion.Invoke(1);
+        //
     }
 
     public void Explode()
