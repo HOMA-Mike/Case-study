@@ -48,7 +48,28 @@ public class Tower : MonoBehaviour
             for (int i = 0; i < TileCountPerFloor; i++) {
                 Quaternion direction = Quaternion.AngleAxis(angleStep * i, Vector3.up) * floorRotation;
                 Vector3 position = transform.position + Vector3.up * y * TileHeight + direction * Vector3.forward * towerRadius;
-                TowerTile tileInstance = Instantiate(Random.value > SpecialTileChance ? TilePrefab : SpecialTilePrefabs[Random.Range(0, SpecialTilePrefabs.Length)], position, direction * TilePrefab.transform.rotation, transform);
+
+                // mod
+                TowerTile tileInstance = null;
+
+                if(RemoteConfig.BOOL_TILES_POOLING)
+                {
+                    tileInstance = TilePool.GetTile(
+                        Random.value > SpecialTileChance,
+                        Random.value > SpecialTileChance ? Random.Range(0, SpecialTilePrefabs.Length) : -1,
+                        tile =>
+                        {
+                            tile.transform.position = position;
+                            tile.transform.rotation = direction * TilePrefab.transform.rotation;
+                        }
+                    );
+                }
+                else
+                {
+                    tileInstance = Instantiate(Random.value > SpecialTileChance ? TilePrefab : SpecialTilePrefabs[Random.Range(0, SpecialTilePrefabs.Length)], position, direction * TilePrefab.transform.rotation, transform);
+                }
+                //
+
                 tileInstance.SetColorIndex(Mathf.FloorToInt(Random.value * TileColorManager.Instance.ColorCount));
                 tileInstance.SetFreezed(true);
                 tileInstance.Floor = y;
@@ -92,7 +113,14 @@ public class Tower : MonoBehaviour
             foreach (List<TowerTile> tileList in tilesByFloor) {
                 foreach (TowerTile tile in tileList) {
                     if (Application.isPlaying)
-                        Destroy(tile.gameObject);
+                    {
+                        // mod
+                        if(RemoteConfig.BOOL_TILES_POOLING)
+                            tile.ReturnToPool();
+                        else
+                            Destroy(tile.gameObject);
+                        //
+                    }
                     else
                         DestroyImmediate(tile.gameObject);
                 }
