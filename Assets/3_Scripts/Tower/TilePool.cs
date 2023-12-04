@@ -19,7 +19,7 @@ public class TilePool : MonoBehaviour
 
     void Awake()
     {
-        if (!RemoteConfig.BOOL_TILES_POOLING)
+        if (instance != null || !RemoteConfig.BOOL_TILES_POOLING)
         {
             Destroy(gameObject);
             return;
