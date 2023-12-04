@@ -242,6 +242,9 @@ public class MissionsManager : MonoBehaviour
         // custom check for WinInTime objective
         foreach (Mission mission in instance.currentMissions)
         {
+            if (mission == null)
+                continue;
+
             if (mission.objective == Objective.WinInTime && mission.progress > 0)
                 CurrencyManager.AddCurrency(mission.currency, mission.reward);
         }
