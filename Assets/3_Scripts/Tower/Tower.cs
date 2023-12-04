@@ -54,9 +54,11 @@ public class Tower : MonoBehaviour
 
                 if(RemoteConfig.BOOL_TILES_POOLING)
                 {
+                    bool isNormal = Random.value > SpecialTileChance;
+
                     tileInstance = TilePool.GetTile(
-                        Random.value > SpecialTileChance,
-                        Random.value > SpecialTileChance ? Random.Range(0, SpecialTilePrefabs.Length) : -1,
+                        isNormal,
+                        isNormal ? Random.Range(0, SpecialTilePrefabs.Length) : -1,
                         tile =>
                         {
                             tile.transform.position = position;
