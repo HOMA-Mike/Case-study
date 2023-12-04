@@ -86,6 +86,8 @@ public class TilePool : MonoBehaviour
         tile.gameObject.SetActive(false);
         tile.transform.SetParent(instance.transform);
         tile.OnTileDestroyed = null;
+        tile.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        tile.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
 
     public static void RetrieveAllTiles()

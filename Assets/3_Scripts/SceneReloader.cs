@@ -9,14 +9,14 @@ public class SceneReloader : MonoBehaviour
 
     IEnumerator Start()
     {
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync("GameScene");
+        loadOp.allowSceneActivation = false;
+        while (!AllowChange || loadOp.progress < 0.9f)
+            yield return null;
         // mod
         MissionsPanel.UnsubscribeTickets();
         TilePool.RetrieveAllTiles();
         //
-        AsyncOperation loadOp = SceneManager.LoadSceneAsync("GameScene");
-        loadOp.allowSceneActivation = false;
-        while(!AllowChange || loadOp.progress < 0.9f)
-            yield return null;
         loadOp.allowSceneActivation = true;
     }
 }
