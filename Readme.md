@@ -27,7 +27,15 @@ Enabling GPU instantiation on both of those materials lowered batches from 31 to
 ![Before](Assets/Documentation~/BeforeBatching.png)
 ![After](Assets/Documentation~/AfterBatching.png)
 
-### 2. 
+### Canvas splitting
+
+All the UI objects of the game are present in the main game scene under **GameManager/UI** and are under one **Canvas** component. Many of those UI objects are animated, which will prompt constant draw calls to the GPU to refresh the modified UI.
+
+Unity draws UI using the **Canvas** component to group together UI which needs to be refreshed. Since there is only one **Canvas** component in the whole UI hierarchy, the whole UI will get **refreshed everytime one element changes**.
+
+To optimize this I **added a Canvas component on each main UI object**. I examined the animation clips from the [GameManagerAnimator](Assets/1_Graphics/Animation/GameManager/GameManagerAnimator.controller) controller to see which UI object was animated.
+
+More details of how Unity manages UI and optimization [here](https://unity.com/how-to/unity-ui-optimization-tips).
 
 ## Pooling
 
