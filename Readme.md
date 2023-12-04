@@ -10,6 +10,8 @@ For the sake of reviewing, all modified game code will be labeled like this :
 
 The folder "Documentation~" has been added to the project for the sake of providing screenshots in this document. This folder will be ignored by the Unity editor. Please view this file with a previewer (gitHub has one by default) to have the full experience.
 
+Some objects were made into prefabs for multi-scene possiblity.
+
 ## Optimizations
 
 ### Material batching
@@ -55,16 +57,29 @@ More details of how Unity manages UI and optimization [here](https://unity.com/h
 
 - The configuration method injected in `GetTile` makes it easy to provide extra configuration if needed, depending on how the project spawned tiles before. I chose not to put all the configuration in it for the sake of **keeping code untouched if it didn't need to be modified.**
 
-## Features
+## Missions
 
-### Missions
+Missions are picked from a list on game start.
 
-- Assets used for the UI come from [Kenney](https://www.kenney.nl/assets/ui-pack)
+The 4 types of missions I made are :
+
+- `Reach combo` : Reach a certain combo count.
+
+- `Win games` : Win a certain number of games.
+
+- `Trigger explosions` : Trigger a certain number of explosions.
+
+- `Win in time` : Win before the end of the timer.
+
+Each mission type is described in a [MissionData](Assets/3_Scripts/MissionData.cs) scriptable object which also contains the difficulty levels of this mission type and the associated reward.
+
+Once the objective and difficulty level are picked for a mission, a new object [Mission](Assets/3_Scripts/Mission.cs) is created, which is a lightweight representation of a mission's data.
+
+It should be simple to add a new `Objective` or `Difficulty`.
+All missions provide the player with currency. There is only one type of currency for now but the [CurrencyManager](Assets/3_Scripts/CurrencyManager.cs) has support for extending the types of currencies available.
+
+Completed missions are replaced at the end of a game. Some mission's progress will be reset between games.
 
 ## Extras
 
-I added an editor window to edit the fields of RemoteConfig during runtime for ease of testing.
-You can find this tool under `Tools/Configuration editor`.
-You can find the script [here](Assets/3_Scripts/Editor/RemoteConfigEditor.cs).
-
-⚠️ **Not all features are compatible with dynamic switching** ⚠️
+The folder [ThirdParty](Assets/ThirdParty/) has been added to the project to store the assets I've used for making the Mission UI. The UI assets were provided by Kenney [Kenney](https://www.kenney.nl/assets/ui-pack).
