@@ -1,6 +1,7 @@
 ﻿public static class RemoteConfig
 {
     public static bool BOOL_TILES_POOLING = true;
+    public static bool BOOl_MISSIONS_ENABLED = true;
     public static int INT_LEVEL_GENERATION_BASE_SEED = 15;
     public static bool BOOL_EXPLOSIVE_BARRELS_ENABLED = true;
     public static int INT_EXPLOSIVE_BARRELS_MIN_LEVEL = 2;
