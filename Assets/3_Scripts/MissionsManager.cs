@@ -10,7 +10,6 @@ using Random = UnityEngine.Random;
 /// <summary>Manages missions tracking and updating</summary>
 public class MissionsManager : MonoBehaviour
 {
-    // TODO : Deactivate missions when config is off
     static MissionsManager instance;
 
     // Add new Tracker for each objective
@@ -251,8 +250,7 @@ public class MissionsManager : MonoBehaviour
     // Called by MissionPanel when it has spawned
     public static void SetUI(MissionsPanel panel) => instance.missionsPanel = panel;
 
-    // TODO : Add description here
-    /// <summary></summary>
+    /// <summary>Wrapper around tracker event to contain counters and different behaviours</summary>
     public class Tracker
     {
         Action<int> trackingEvent;
