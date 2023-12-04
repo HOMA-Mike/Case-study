@@ -416,7 +416,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8089672564886453695
 Canvas:
@@ -480,6 +480,13 @@ MonoBehaviour:
   progressSlider: {fileID: 8089672564374970363}
   progressToggle: {fileID: 8089672564955932564}
   progressText: {fileID: 8089672564294864327}
+  mission:
+    objective: 0
+    difficulty: 0
+    amount: 0
+    currency: 0
+    reward: 0
+    title: 
 --- !u!1 &8089672564955932522
 GameObject:
   m_ObjectHideFlags: 0

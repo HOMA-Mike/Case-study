@@ -85,8 +85,16 @@ public class MissionsManager : MonoBehaviour
     {
         yield return new WaitUntil(() => missionsPanel != null);
 
-        foreach (Mission mission in currentMissions)
+        for (int i = 0; i < currentMissions.Length; i++)
         {
+            Mission mission = currentMissions[i];
+
+            if (mission == null)
+            {
+                currentMissions[i] = PickMission((Difficulty)i);
+                mission = currentMissions[i];
+            }
+
             // reset countdown when new game
             if (mission.objective == Objective.WinInTime)
                 mission.TrackProgress(mission.amount);
@@ -185,31 +193,6 @@ public class MissionsManager : MonoBehaviour
         }
     }
 
-    // Action<int> GetMissionTrackingEvent(Mission mission)
-    // {
-    //     Action<int> trackingEvent = mission.objective switch
-    //     {
-    //         Objective.ReachCombo => OnComboReached,
-    //         Objective.WinGames => OnWonGame,
-    //         Objective.TriggerExplosions => OnTriggeredExplosion,
-    //         Objective.WinInTime => OnSecondsPassed,
-    //         _ => null
-    //         // Add tracking event subscription here
-    //     };
-
-    //     if (trackingEvent == null)
-    //     {
-    //         Debug.LogError(
-    //             "Couldn't find a tracking event for objective " + mission.objective +
-    //             ". Please add it at the top of this script",
-    //             this
-    //         );
-    //         return null;
-    //     }
-
-    //     return trackingEvent;
-    // }
-
     static void CheckMissionsDone()
     {
         for (int i = 0; i < instance.currentMissions.Length; i++)
@@ -224,27 +207,16 @@ public class MissionsManager : MonoBehaviour
                 if (mission.progress <= 0)
                 {
                     UnsubscribeTracking(mission.objective, mission.TrackProgress);
-
-                    instance.StartCoroutine(instance.WaitForPanelReady(i, mission.difficulty));
                     instance.currentMissions[i] = null;
                 }
             }
             else if (mission.progress >= 1)
             {
-                UnsubscribeTracking(mission.objective, mission.TrackProgress);
                 CurrencyManager.AddCurrency(mission.currency, mission.reward);
-
-                instance.StartCoroutine(instance.WaitForPanelReady(i, mission.difficulty));
+                UnsubscribeTracking(mission.objective, mission.TrackProgress);
                 instance.currentMissions[i] = null;
             }
         }
-    }
-
-    IEnumerator WaitForPanelReady(int index, Difficulty difficulty)
-    {
-        yield return new WaitUntil(() => missionsPanel.HasSlot);
-        currentMissions[index] = PickMission(difficulty);
-        missionsPanel.SpawnMission(currentMissions[index]);
     }
 
     public static Color GetColor(Difficulty difficulty)
