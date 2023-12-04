@@ -65,28 +65,29 @@ public class CurrencyManager : MonoBehaviour
             return;
         }
 
-        selected.amount.text = stack.amount.ToString();
-
         if (selected.animation != null)
             instance.StopCoroutine(selected.animation);
 
-        selected.animation = instance.StartCoroutine(AnimateIcon(selected, Vector3.one * 1.5f, 0.3f));
+        selected.animation = instance.StartCoroutine(AnimateIcon(selected, stack.amount, Vector3.one * 1.5f, 0.3f));
     }
 
     // didn't want to clog the project with DOTween
-    static IEnumerator AnimateIcon(CurrencyUI ui, Vector3 targetScale, float duration)
+    static IEnumerator AnimateIcon(CurrencyUI ui, int newValue, Vector3 targetScale, float duration)
     {
+        int oldValue = int.Parse(ui.amount.text);
         float timer = 0;
 
         while (timer < duration)
         {
-            if (timer < duration / 2)
-                ui.icon.transform.localScale = Vector3.Lerp(Vector3.one, targetScale, timer / (duration / 2));
-            else
-            {
-                ui.icon.transform.localEulerAngles = Vector3.Lerp(targetScale, Vector3.one, (timer - timer / 2) / (duration / 2));
-            }
+            timer += Time.deltaTime;
+            float percent = timer / duration;
 
+            if (percent < 0.5f)
+                ui.icon.transform.localScale = Vector3.Lerp(Vector3.one, targetScale, percent * 2);
+            else
+                ui.icon.transform.localEulerAngles = Vector3.Lerp(targetScale, Vector3.one, (percent - 0.5f) * 2);
+
+            ui.amount.text = Mathf.FloorToInt(Mathf.Lerp(oldValue, newValue, timer / duration)).ToString();
             yield return null;
         }
 
