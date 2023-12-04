@@ -61,6 +61,7 @@ public class Tower : MonoBehaviour
                         {
                             tile.transform.position = position;
                             tile.transform.rotation = direction * TilePrefab.transform.rotation;
+                            tile.transform.SetParent(transform);
                         }
                     );
                 }
