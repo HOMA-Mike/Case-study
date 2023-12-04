@@ -54,3 +54,17 @@ More details of how Unity manages UI and optimization [here](https://unity.com/h
     `void ReturnTile(TowerTile tile)` : Will deactivate the tile and make it available to be selected by `GetTile`.
 
 - The configuration method injected in `GetTile` makes it easy to provide extra configuration if needed, depending on how the project spawned tiles before. I chose not to put all the configuration in it for the sake of **keeping code untouched if it didn't need to be modified.**
+
+## Features
+
+### Missions
+
+- Assets used for the UI come from [Kenney](https://www.kenney.nl/assets/ui-pack)
+
+## Extras
+
+I added an editor window to edit the fields of RemoteConfig during runtime for ease of testing.
+You can find this tool under `Tools/Configuration editor`.
+You can find the script [here](Assets/3_Scripts/Editor/RemoteConfigEditor.cs).
+
+⚠️ **Not all features are compatible with dynamic switching** ⚠️
