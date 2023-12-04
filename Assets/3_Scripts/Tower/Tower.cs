@@ -58,7 +58,7 @@ public class Tower : MonoBehaviour
 
                     tileInstance = TilePool.GetTile(
                         isNormal,
-                        isNormal ? Random.Range(0, SpecialTilePrefabs.Length) : -1,
+                        isNormal ? Random.Range(0, SpecialTilePrefabs.Length) : 0,
                         tile =>
                         {
                             tile.transform.position = position;
